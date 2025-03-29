@@ -1,0 +1,39 @@
+<mat-sidenav-container class="sidenav-container">
+  <!-- Sidebar -->
+  <mat-sidenav mode="side" opened="true" class="sidenav">
+    <mat-toolbar class="sideTool">Menu</mat-toolbar>
+    <div class="sidenav-content">
+      <mat-nav-list>
+        @for (link of menuItems; track link) {
+          <mat-list-item
+            routerLink="{{ link.route }}"
+            [activated]="link.isActive"
+          >
+            <mat-icon matListIcon>{{ link.icon }}</mat-icon>
+            <span>{{ link.label }}</span>
+          </mat-list-item>
+        }
+      </mat-nav-list>
+    </div>
+  </mat-sidenav>
+
+  <!-- Main Content -->
+  <mat-sidenav-content>
+    <mat-toolbar color="primary" class="toolbar">
+      <div class="menu-bar">
+        <button
+          mat-icon-button
+          aria-label="Example icon button with a vertical three dot icon"
+          (click)="toggleSidenav()"
+        >
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span>Student App</span>
+        <button mat-button (click)="logout()">Logout</button>
+      </div>
+    </mat-toolbar>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

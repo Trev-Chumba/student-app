@@ -1,0 +1,39 @@
+<mat-card class="loginCard" appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>Student app Login</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
+        <input
+          matInput
+          placeholder="Enter username"
+          [(ngModel)]="userName"
+          name="userName"
+          required
+        />
+        <mat-icon matSuffix>person</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          [type]="hide() ? 'password' : 'text'"
+          [(ngModel)]="passWord"
+          name="passWord"
+          required
+        />
+        <button mat-icon-button matSuffix (click)="clickEvent($event)">
+          <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-card-actions>
+        <button mat-flat-button type="submit" [disabled]="!loginForm">
+          Login
+        </button>
+      </mat-card-actions>
+    </form>
+  </mat-card-content>
+</mat-card>

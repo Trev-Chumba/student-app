@@ -1,0 +1,133 @@
+.sidenav-container {
+  height: 100%;
+  display: flex;
+  width: 100%;
+}
+
+.sidenav {
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0;
+}
+
+.sidenav-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+  border: 0.5px solid mat-color(primary);
+  /* background-color: rgb(205, 205, 205); */
+  padding: 30px 16px;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: 0 5px 1px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s ease;
+}
+
+mat-nav-list {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+mat-list-item {
+  display: flex;
+  align-items: center; /* Aligns icon & text */
+  gap: 10px; /* Adds spacing between icon & text */
+  padding: 10px;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+  border-radius: 0;
+  color: black; /* Ensures no rounded corners */
+}
+
+/* Hover effect */
+mat-list-item:hover {
+  background-color: #007ac1 !important; /* Blue background */
+  color: white !important; /* White text */
+}
+
+/* Ensure icons are aligned properly */
+mat-list-item mat-icon {
+  color: gray;
+  margin-right: 10px;
+  vertical-align: middle; /* Ensures proper alignment */
+}
+
+mat-list-item span {
+  color: black;
+}
+
+mat-list-item:hover span {
+  color: white;
+}
+
+/* Change icon color on hover */
+mat-list-item:hover mat-icon {
+  color: white !important;
+}
+
+.menu-item.active-link {
+  background-color: #007ac1 !important;
+  color: white !important;
+  border-radius: 0; /* Ensures straight borders */
+}
+
+/* Ensure icons and text also turn white */
+.menu-item.active-link mat-icon,
+.menu-item.active-link span {
+  color: white !important;
+}
+
+.toolbar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: #007ac1; /* Azure Blue primary */
+  color: white;
+}
+
+.menu-bar {
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+  background-color: var(--mat-primary);
+}
+
+.menu-bar span {
+  padding-top: 10px;
+}
+
+.content {
+  margin-top: 5px;
+  padding: 16px;
+}
+
+mat-sidenav-content {
+  width: 100%;
+}
+.sideTool {
+  background-color: #007ac1; /* Azure Blue primary */
+  color: white;
+}
+
+button[mat-icon-button] {
+  color: white !important;
+}
+
+/* Style for the logout button */
+button[mat-button] {
+  color: white !important;
+  font-weight: bold;
+}
+
+button[mat-button]:hover {
+  color: whitesmoke !important;
+  font-weight: bolder;
+}
