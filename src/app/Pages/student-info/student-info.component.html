@@ -1,0 +1,106 @@
+<div>
+  <div class="avatar-container">
+    @if (studentInfo != null && studentInfo.photoPath) {
+      <img
+        class="avatar"
+        [src]="studentInfo.photoPath"
+        (error)="avatarUrl = 'assets/default.png'"
+        alt="User Avatar"
+      />
+    }
+    <mat-divider></mat-divider>
+  </div>
+
+  <form class="example-form" (ngSubmit)="onSubmit()">
+    <mat-grid-list cols="2" rowHeight="6:1" gutterSize="4px">
+      <mat-grid-tile>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <!-- <mat-label>First Name</mat-label> -->
+          @if (studentInfo != null && studentInfo.firstName) {
+            <input
+              matInput
+              [(ngModel)]="studentInfo.firstName"
+              name="firstName"
+            />
+          } @else {
+            <input matInput [value]="studentInfo?.lastName" name="firstName" />
+          }
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <!-- <mat-label>Last Name</mat-label> -->
+          @if (studentInfo != null && studentInfo.lastName) {
+            <input
+              matInput
+              [(ngModel)]="studentInfo.lastName"
+              name="lastName"
+            />
+          } @else {
+            <input matInput [value]="studentInfo?.lastName" name="lastName" />
+          }
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Date of Birth</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker1"
+            [ngModel]="studentInfo?.DOB"
+            (ngModelChange)="onDateSelected($event)"
+            name="date"
+          />
+          <mat-hint>YYYY-MM-DD</mat-hint>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker1"
+          ></mat-datepicker-toggle>
+          <mat-datepicker
+            #picker1
+            (closed)="onDatePickerClosed()"
+          ></mat-datepicker>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Class</mat-label>
+          @if (studentInfo != null) {
+            <input
+              matInput
+              [(ngModel)]="studentInfo.studentClass"
+              name="studentClass"
+            />
+          }
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Status</mat-label>
+          @if (studentInfo != null && studentInfo.status) {
+            <input matInput [(ngModel)]="studentInfo.status" name="status" />
+          } @else {
+            <input matInput [value]="studentInfo?.status" name="status" />
+          }
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Score</mat-label>
+          @if (studentInfo != null && studentInfo.score) {
+            <input matInput [(ngModel)]="studentInfo.score" name="score" />
+          } @else {
+            <input matInput [value]="studentInfo?.score" name="score" />
+          }
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <div class="form-actions">
+      <button mat-flat-button color="primary">Update</button>
+    </div>
+  </form>
+</div>

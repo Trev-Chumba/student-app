@@ -1,0 +1,59 @@
+<div>
+  <form
+    #requestForm="ngForm"
+    class="example-button-row"
+    (ngSubmit)="generateExcel()"
+  >
+    <div class="formRow">
+      <mat-form-field appearance="outline" class="inputField">
+        <mat-label>Number requested</mat-label>
+        <input
+          matInput
+          placeholder="0,1,2.."
+          [(ngModel)]="userRequest"
+          name="userRequest"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="inputField">
+        <mat-label>File Name </mat-label>
+        <input
+          matInput
+          placeholder="file name here"
+          [(ngModel)]="fileName"
+          name="fileName"
+          required
+        />
+        <mat-icon matSuffix>keyboard</mat-icon>
+        <mat-hint>no need for extension</mat-hint>
+      </mat-form-field>
+    </div>
+    <div>
+      <button
+        mat-raised-button
+        type="submit"
+        [disabled]="userRequest < 1 || !fileName || fileName.trim() === ''"
+      >
+        Request Excel
+      </button>
+    </div>
+  </form>
+
+  @if (files.length > 0) {
+    <div>
+      <h3>Available Excel Files</h3>
+      <ul>
+        @for (file of files; track $index) {
+          <li>
+            <button mat-button (click)="downloadFile(file)">{{ file }}</button>
+          </li>
+        }
+      </ul>
+    </div>
+  } @else {
+    <ng-template #noFiles>
+      <p>No Excel files available for download.</p>
+    </ng-template>
+  }
+</div>

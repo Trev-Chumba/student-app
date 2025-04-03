@@ -50,24 +50,19 @@ export class LayoutComponent {
       route: '/data-processing',
       isActive: false,
     },
-    {
-      label: 'File Upload',
-      icon: 'upload',
-      route: '/file-upload',
-      isActive: false,
-    },
+
     {
       label: 'Student Management',
       icon: 'group',
-      route: '/student-management',
+      route: '/student',
       isActive: false,
     },
-    {
-      label: 'Student Report',
-      icon: 'bar_chart',
-      route: '/student-report',
-      isActive: false,
-    },
+    // {
+    //   label: 'Student Report',
+    //   icon: 'bar_chart',
+    //   route: '/student-report',
+    //   isActive: false,
+    // },
   ];
 
   constructor(

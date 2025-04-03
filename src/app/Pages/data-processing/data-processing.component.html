@@ -1,0 +1,5 @@
+<input type="file" (change)="onChange($event)" accept=".xlsx, xls" />
+
+<button mat-flat-button [disabled]="!fileHere" (click)="handleFileUpload()">
+  Upload
+</button>

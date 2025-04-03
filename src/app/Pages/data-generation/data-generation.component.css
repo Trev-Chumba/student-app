@@ -1,0 +1,28 @@
+.example-button-row {
+  display: table-cell;
+  max-width: 600px;
+}
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+td {
+  padding-right: 8px;
+}
+
+.formRow {
+  display: flex;
+  gap: 16px; /* Adds space between inputs */
+  align-items: center;
+}
+
+.inputField {
+  flex: 1; /* Makes both input fields equal width */
+  min-width: 200px; /* Prevents shrinking too much */
+}
