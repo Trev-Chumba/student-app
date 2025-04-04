@@ -129,6 +129,7 @@ export class StudentInfoComponent implements OnInit {
     this.api.post<any>(API_ENDPOINTS.UPDATE_STUDENT, requestBody).subscribe({
       next: (response) => {
         alert('Student updated successfully!');
+        console.log(requestBody);
       },
       error: (error) => {
         alert('Failed to update student.');

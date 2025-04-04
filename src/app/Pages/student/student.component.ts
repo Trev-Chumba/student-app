@@ -120,6 +120,10 @@ export class StudentComponent implements AfterViewInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
+    this.dataSource.filterPredicate = (data: StudentData, filter: string) => {
+      return data.studentId.toString().includes(filter);
+    };
+
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }

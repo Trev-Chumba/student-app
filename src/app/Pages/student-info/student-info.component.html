@@ -103,10 +103,10 @@
       <mat-grid-tile>
         <mat-form-field class="example-full-width" appearance="outline">
           <mat-label>Status</mat-label>
-          @if (studentInfo != null && studentInfo.status) {
+          @if (studentInfo != null) {
             <input matInput [(ngModel)]="studentInfo.status" name="status" />
           } @else {
-            <input matInput [value]="studentInfo?.status" name="status" />
+            <!-- <input matInput [value]="studentInfo?.status" name="status" /> -->
           }
         </mat-form-field>
       </mat-grid-tile>
