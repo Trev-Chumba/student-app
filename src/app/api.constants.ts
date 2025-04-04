@@ -8,6 +8,7 @@ export const API_ENDPOINTS = {
   CREATE_STUDENT: '/student/create',
   UPDATE_STUDENT: '/student/update',
   DELETE_STUDENT: '/student/delete',
+  PHOTO_UPLOAD: '/student/upload',
 
   GENERATE_STUDENTS: '/excel/generate',
   GET_FILES: '/excel/list',

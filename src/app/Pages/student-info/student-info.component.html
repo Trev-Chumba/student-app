@@ -1,13 +1,36 @@
 <div>
   <div class="avatar-container">
-    @if (studentInfo != null && studentInfo.photoPath) {
-      <img
-        class="avatar"
-        [src]="studentInfo.photoPath"
-        (error)="avatarUrl = 'assets/default.png'"
-        alt="User Avatar"
-      />
-    }
+    <div class="arrangeRow">
+      @if (
+        studentInfo != null &&
+        studentInfo.photoPath !== 'https://avatar.iran.liara.run/public'
+      ) {
+        <img
+          class="avatar"
+          [src]="getImageUrl(studentInfo.photoPath)"
+          (error)="avatarUrl = 'assets/default.png'"
+          alt="User Avatar"
+        />
+      } @else {
+        <img
+          class="avatar"
+          src="https://avatar.iran.liara.run/public"
+          (error)="avatarUrl = 'assets/default.png'"
+          alt="User Avatar"
+        />
+      }
+      <div>
+        <input type="file" (change)="onChange($event)" />
+
+        <button
+          mat-flat-button
+          [disabled]="!fileHere"
+          (click)="handleFileUpload()"
+        >
+          Upload
+        </button>
+      </div>
+    </div>
     <mat-divider></mat-divider>
   </div>
 

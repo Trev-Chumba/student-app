@@ -18,6 +18,7 @@ import {
   MatNativeDateModule,
   provideNativeDateAdapter,
 } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
 
 export const MY_DATE_FORMATS = {
   parse: { dateInput: 'YYYY-MM-DD' },
@@ -41,6 +42,7 @@ export const MY_DATE_FORMATS = {
     ReactiveFormsModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatIconModule,
   ],
   templateUrl: './student-info.component.html',
   styleUrl: './student-info.component.css',
@@ -49,7 +51,8 @@ export class StudentInfoComponent implements OnInit {
   studentInfo: StudentData | null = null;
   date = new FormControl();
 
-  new: any;
+  fileHere?: File | null;
+
   constructor(
     private api: FetchApiService,
     private route: ActivatedRoute,
@@ -57,9 +60,12 @@ export class StudentInfoComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const pathVar = this.route.snapshot.paramMap.get('studentId');
-    console.log(pathVar);
+    this.fetchStudent();
+  }
 
+  fetchStudent() {
+    const pathVar = this.route.snapshot.paramMap.get('studentId');
+    // console.log(pathVar);
     this.api
       .get<StudentData>(API_ENDPOINTS.GET_STUDENT + '/' + pathVar)
       .subscribe({
@@ -76,6 +82,7 @@ export class StudentInfoComponent implements OnInit {
 
             this.studentInfo = student;
             this.studentInfo.DOB = student.dob;
+            console.log(this.studentInfo.photoPath);
           } else {
             // this.navigate.navigate(['/students']);
             console.error('Error fetching student: No such Student');
@@ -146,5 +153,46 @@ export class StudentInfoComponent implements OnInit {
   }
   onDatePickerClosed() {
     this.onDateSelected(this.studentInfo?.DOB);
+  }
+
+  onChange(event: any) {
+    this.fileHere = event.target.files[0];
+  }
+
+  handleFileUpload() {
+    if (!this.fileHere) {
+      console.error('No file selected');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('image', this.fileHere);
+    if (this.studentInfo?.studentId) {
+      formData.append('studentId', this.studentInfo.studentId.toString());
+      console.log(formData);
+    }
+
+    this.api.postFile(API_ENDPOINTS.PHOTO_UPLOAD, formData).subscribe({
+      next: (img) => {
+        console.log(img);
+        alert('Updated photo');
+        this.fetchStudent();
+      },
+      error: (error) => {
+        console.log('failed', error);
+        alert('failed');
+      },
+    });
+  }
+
+  getImageUrl(fullPath: string): string {
+    // Remove the base path to get just the relative path
+    const relativePath = fullPath.replace(
+      '/home/nomad/var/log/applications/API/StudentPhotos/',
+      ''
+    );
+    // console.log(relativePath);
+
+    return `http://localhost:8099/uploads/${relativePath}`;
   }
 }

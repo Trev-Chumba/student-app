@@ -1,7 +1,6 @@
-.dashCards {
+.actionBar {
   display: flex;
-  margin: auto;
+  width: 90%;
   flex-direction: row;
-  width: 45%;
   justify-content: space-between;
 }

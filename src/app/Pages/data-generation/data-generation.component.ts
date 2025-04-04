@@ -57,7 +57,10 @@ export class DataGenerationComponent implements OnInit {
         console.log('Excel generation complete');
         this.fetchFiles();
       },
-      error: (err) => console.error('Error:', err),
+      error: (err) => {
+        console.error('Error:', err);
+        this.dialog.closeAll();
+      },
     });
   }
 

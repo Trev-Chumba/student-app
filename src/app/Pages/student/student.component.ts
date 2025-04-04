@@ -12,6 +12,17 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltip, MatTooltipModule } from '@angular/material/tooltip';
+import { MatSelectModule } from '@angular/material/select';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../../General/confirmation-dialog/confirmation-dialog.component';
 
 export interface StudentData {
   dob: any;
@@ -41,6 +52,11 @@ export interface StudentData {
     MatIcon,
     MatButtonModule,
     MatTooltipModule,
+    MatSelectModule,
+    FormsModule,
+    MatDatepickerModule,
+    ReactiveFormsModule,
+    MatNativeDateModule,
   ],
 })
 export class StudentComponent implements AfterViewInit {
@@ -67,6 +83,15 @@ export class StudentComponent implements AfterViewInit {
     'photoPath',
     // 'actions',
   ];
+
+  originalData: StudentData[] = [];
+  selectedClass: string = '';
+  uniqueClasses: string[] = ['Class1', 'Class2', 'Class3', 'Class4', 'Class5'];
+
+  dateRange = new FormGroup({
+    start: new FormControl<Date | null>(null),
+    end: new FormControl<Date | null>(null),
+  });
   dataSource: MatTableDataSource<StudentData> =
     new MatTableDataSource<StudentData>([]);
 
@@ -78,7 +103,8 @@ export class StudentComponent implements AfterViewInit {
 
   constructor(
     private api: FetchApiService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -103,6 +129,7 @@ export class StudentComponent implements AfterViewInit {
     this.api.get<StudentData[]>(API_ENDPOINTS.GET_ALL_STUDENTS).subscribe({
       next: (students) => {
         this.dataSource.data = students;
+        this.originalData = students;
         // console.log(this.dataSource);
       },
       error: (error) => {
@@ -116,15 +143,12 @@ export class StudentComponent implements AfterViewInit {
   }
 
   deleteRow(row: StudentData) {
-    this.api.post<StudentData>(API_ENDPOINTS.DELETE_STUDENT, row).subscribe({
-      next: () => {
-        //console.log('User deleted successfully');
-        alert(`user ${row.studentId} deleted`);
-        this.fetchStudents();
-      },
-      error: (error) => {
-        console.error('Error deleting user:', error);
-      },
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '400px',
+      data: row,
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.fetchStudents();
     });
   }
 
@@ -160,5 +184,36 @@ export class StudentComponent implements AfterViewInit {
     });
 
     saveAs(dataBlob, fileName);
+  }
+
+  applyFilters() {
+    let filteredData = [...this.originalData];
+
+    // Apply class filter if selected
+    if (this.selectedClass) {
+      filteredData = filteredData.filter(
+        (item) => item.studentClass === this.selectedClass
+      );
+    }
+
+    // Apply date range filter if dates are selected
+    const startDate = this.dateRange.get('start')?.value;
+    const endDate = this.dateRange.get('end')?.value;
+
+    if (startDate && endDate) {
+      filteredData = filteredData.filter((item) => {
+        const itemDate = new Date(item.dob);
+        return itemDate >= startDate && itemDate <= endDate;
+      });
+    }
+
+    // Update the table data
+    this.dataSource.data = filteredData;
+  }
+
+  resetFilters() {
+    this.selectedClass = '';
+    this.dateRange.reset();
+    this.dataSource.data = this.originalData;
   }
 }

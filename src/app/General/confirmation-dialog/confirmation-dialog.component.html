@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Confirm Delete</h2>
+<mat-dialog-content>
+  <p>Are you sure you want to delete {{ data.studentId }}</p>
+</mat-dialog-content>
+<mat-dialog-actions class="actionBar">
+  <button mat-button (click)="closeDialog()">Close</button>
+  <div>
+    <button mat-button (click)="softDelete()">soft delete</button>
+    <button mat-button (click)="deleteRow()">Delete</button>
+  </div>
+</mat-dialog-actions>

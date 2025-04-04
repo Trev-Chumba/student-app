@@ -1,7 +1,40 @@
-<mat-form-field>
-  <mat-label>Filter</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input />
-</mat-form-field>
+<div class="filter-container mat-elevation-z0">
+  <mat-form-field appearance="outline">
+    <mat-label>Filter</mat-label>
+    <input
+      matInput
+      (keyup)="applyFilter($event)"
+      placeholder="Ex. Mia"
+      #input
+    />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Class</mat-label>
+    <mat-select [(ngModel)]="selectedClass" (selectionChange)="applyFilters()">
+      <mat-option [value]="''">All Classes</mat-option>
+      @for (item of uniqueClasses; track $index) {
+        <mat-option [value]="item">
+          {{ item }}
+        </mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Date Range</mat-label>
+    <mat-date-range-input [formGroup]="dateRange" [rangePicker]="picker">
+      <input matStartDate formControlName="start" placeholder="Start date" />
+      <input matEndDate formControlName="end" placeholder="End date" />
+    </mat-date-range-input>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-date-range-picker #picker></mat-date-range-picker>
+  </mat-form-field>
+
+  <!-- Apply Filter Button -->
+  <button mat-raised-button color="primary" (click)="applyFilters()">
+    Apply Filters
+  </button>
+  <button mat-button (click)="resetFilters()">Reset</button>
+</div>
 
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort>

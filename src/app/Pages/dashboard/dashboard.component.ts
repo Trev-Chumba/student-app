@@ -12,6 +12,7 @@ import { StudentData } from '../student/student.component';
 })
 export class DashboardComponent implements OnInit {
   studentNumber: number = 0;
+  activeStudents: number = 0;
   constructor(private api: FetchApiService) {}
 
   ngOnInit(): void {
@@ -23,6 +24,10 @@ export class DashboardComponent implements OnInit {
       next: (response: any) => {
         console.log(response.length);
         this.studentNumber = response.length;
+
+        const filteredData = response.filter((item: any) => item.status === 1);
+
+        this.activeStudents = filteredData.length;
       },
       error: (error) => {
         console.log(error);
